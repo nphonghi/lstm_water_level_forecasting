@@ -23,7 +23,6 @@ n_lstm_layers = 3
 
 USE_TEACHER_FORCING_DURING_TRAINING = False
 
-# --- Tạo tập dữ liệu ---
 encoder_inputs_train, decoder_targets_train = prepare_data(
     train_file, attributes, T, P, target_attribute
 )
@@ -35,7 +34,6 @@ encoder_inputs_test, decoder_targets_test = prepare_data(
 y_train_true = tf.convert_to_tensor(decoder_targets_train, dtype=tf.float32)
 y_test_true = tf.convert_to_tensor(decoder_targets_test, dtype=tf.float32)
 
-# --- Chuẩn bị dữ liệu đầu vào cho phương thức `call` của mô hình ---
 # Dữ liệu huấn luyện
 train_input_dict = {
     'encoder_inputs': tf.convert_to_tensor(encoder_inputs_train, dtype=tf.float32)
@@ -52,7 +50,6 @@ test_input_dict = {
     'encoder_inputs': tf.convert_to_tensor(encoder_inputs_test, dtype=tf.float32)
 }
 
-# --- Khởi tạo mô hình Encoder-Decoder ---
 enc_dec_model = EncoderDecoderModel(
     input_dim=n_input_features,
     output_dim=n_output_features,
@@ -139,8 +136,6 @@ for step in range(P):
     
     print(f"  Horizon t+{step+1}: RMSE={rmse_step:.4f}, MAE={mae_step:.4f}, MAPE={mape_step:.4f}, R2={r2_step:.4f}")
 
-
-# --- Lưu mô hình ---
 model_save_path = 'models/encoder_decoder_lstm_model_v2.keras'
 enc_dec_model.save(model_save_path)
 print(f"Mô hình đã được lưu tại: {model_save_path}")

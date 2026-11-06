@@ -7,9 +7,6 @@ columns_to_keep = ['Time', 'WL_KienGiang', 'WL_LeThuy', 'WL_DongHoi', 'RF_DongHo
 value_columns = [col for col in columns_to_keep if col != 'Time']
 
 
-# ==================================
-# Hàm xử lý đầu vào
-# ==================================
 def process_csv_for_scaling(input_path: str) -> pd.DataFrame:
     df = pd.read_csv(input_path)
     datetime_col = df.columns[0]

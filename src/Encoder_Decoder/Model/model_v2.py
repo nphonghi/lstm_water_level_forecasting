@@ -2,10 +2,6 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
-
-# ==================================
-# Lớp Encoder
-# ==================================
 class Encoder(layers.Layer):
     """
     Lớp Encoder LSTM.
@@ -20,8 +16,6 @@ class Encoder(layers.Layer):
 
         self.lstm_layers = []
         for i in range(num_layers):
-            # TẤT CẢ các lớp cần return_state=True để lấy trạng thái cuối.
-            # TẤT CẢ các lớp trừ lớp cuối cùng cần return_sequences=True để truyền chuỗi đầy đủ cho lớp tiếp theo.
             is_last_layer = (i == num_layers - 1)
             self.lstm_layers.append(layers.LSTM(
                 lstm_units,
@@ -72,9 +66,7 @@ class Encoder(layers.Layer):
         })
         return config
 
-# ==================================
-# Lớp Decoder
-# ==================================
+
 class Decoder(layers.Layer):
     """
     Lớp Decoder LSTM.
@@ -89,8 +81,6 @@ class Decoder(layers.Layer):
 
         self.lstm_layers = []
         for i in range(num_layers):
-            # TẤT CẢ các lớp LSTM trong Decoder cần return_sequences=True để có thể áp dụng lớp Dense lên đầu ra tại mỗi bước (ở đây chỉ xử lý 1 bước thời gian).
-            # TẤT CẢ các lớp cần return_state=True để lấy trạng thái mới và truyền cho bước thời gian tiếp theo của Decoder.
             self.lstm_layers.append(layers.LSTM(
                 lstm_units,
                 return_sequences=True,
@@ -143,9 +133,6 @@ class Decoder(layers.Layer):
         })
         return config
 
-# ==================================
-# Lớp Mô hình Encoder-Decoder
-# ==================================
 class EncoderDecoderModel(keras.Model):
     """
     Mô hình LSTM Encoder-Decoder cho dự báo chuỗi thời gian.
@@ -187,12 +174,12 @@ class EncoderDecoderModel(keras.Model):
         encoder_inputs = inputs['encoder_inputs']
         teacher_forcing_targets = inputs.get('teacher_forcing_targets', None)
 
-        # 1. Chạy Encoder để lấy trạng thái ngữ cảnh
+        # Chạy Encoder để lấy trạng thái ngữ cảnh
         encoder_output, encoder_states = self.encoder(encoder_inputs)
         encoder_output = layers.Reshape((1, self.lstm_units))(encoder_output)
         initial_decoder_input = self.encoder_transformer(encoder_output)
 
-        # 2. Khởi tạo vòng lặp Decoder
+        # Khởi tạo vòng lặp Decoder
         all_predictions = []
         decoder_input_current = initial_decoder_input # Đầu vào đầu tiên là đầu ra của encoder
         decoder_states_current = encoder_states # Trạng thái ban đầu từ encoder

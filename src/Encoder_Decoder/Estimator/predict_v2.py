@@ -7,18 +7,16 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error as
 from src.Encoder_Decoder.PreprocessData.prepare_data import prepare_data 
 from src.Encoder_Decoder.Model.model_v2 import EncoderDecoderModel, Encoder, Decoder 
 
-# --- Cấu hình ---
 new_data_file = 'data/DataScaled/Test_WL_2024.csv'
 model_load_path = 'models/encoder_decoder_lstm_model_v2.keras'
 
 attributes = ['WL_KienGiang', 'WL_DongHoi', 'WL_LeThuy', 'RF_DongHoi', 'Tide_DongHoi', 'RF_KienGiang', 'RF_LeThuy']
 target_attribute = 'WL_LeThuy' 
-T = 24  # Độ dài cửa sổ quá khứ (lookback)
-P = 12  # Độ dài chuỗi dự báo (horizon)
+T = 24  # Độ dài cửa sổ quá khứ 
+P = 12  # Độ dài chuỗi dự báo
 n_input_features = len(attributes)
 n_output_features = 1 # Chỉ dự báo mực nước
 
-# --- Load mô hình ---
 print(f"Đang tải mô hình từ: {model_load_path}")
 # Khi load mô hình tùy chỉnh, cần cung cấp các lớp tùy chỉnh đó
 custom_objects = {
@@ -34,10 +32,7 @@ except Exception as e:
     print(f"Lỗi khi tải mô hình: {e}")
     exit()
 
-# --- Chuẩn bị dữ liệu mới ---
 print(f"\nĐang chuẩn bị dữ liệu từ: {new_data_file}")
-# Hàm prepare_data sẽ trả về encoder_inputs và decoder_targets
-# decoder_targets chính là y_true để so sánh
 encoder_inputs_new, y_true_new_data = prepare_data(
     new_data_file, attributes, T, P, target_attribute
 )
@@ -52,17 +47,14 @@ new_input_dict = {
 }
 print(f"Số lượng mẫu trong dữ liệu mới: {encoder_inputs_new_tf.shape[0]}")
 
-# --- Thực hiện dự đoán ---
 print("\nBắt đầu dự đoán trên dữ liệu mới...")
 try:
     y_pred_new_np = loaded_model.predict(new_input_dict)
-    # y_pred_new_np = loaded_model(new_input_dict, training=False).numpy() # Cách gọi call trực tiếp
     print(f"Dự đoán hoàn tất. Shape của kết quả dự đoán: {y_pred_new_np.shape}")
 except Exception as e:
     print(f"Lỗi trong quá trình dự đoán: {e}")
     exit()
 
-# --- Đánh giá kết quả ---
 y_true_new_data_np = y_true_new_data_tf.numpy()
 
 scaler = joblib.load('data/DataScaled/minmax_scaler2.pkl')
@@ -108,7 +100,6 @@ else:
     print("\nKhông có dữ liệu thực tế (y_true) để đánh giá trên tập dữ liệu mới.")
 
 
-# --- Vẽ biểu đồ cho một vài mẫu ---
 num_samples_to_plot = min(3, encoder_inputs_new_tf.shape[0]) # Vẽ tối đa 3 mẫu
 if y_true_new_data_np is not None:
     for i in range(num_samples_to_plot):
