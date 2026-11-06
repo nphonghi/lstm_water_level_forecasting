@@ -1,10 +1,25 @@
+# Byte-compiled / optimized files
 __pycache__/
-Data/
-DataPre/
-DataScaled/
+*.py[cod]
+*$py.class
+
+# Virtual environments
 da1/
-da1/
-Data/
-DataPre/
-DataScaled/
+venv/
+.venv/
+env/
+
+# Data & Scaler checkpoints
+data/DataRaw/
+data/DataPre/
+data/DataScaled/
+*.pkl
+
+# Model weights
 models/
+Models/
+*.keras
+*.h5
+
+# OS artifacts
+.DS_Store

@@ -6,11 +6,11 @@ Climate change has significantly increased the frequency and intensity of extrem
 
 ## Project Workflow
 
-![Project Workflow](images/workflow.png)
+![Project Workflow](reports/figures/workflow.png)
 
 ## Model Architecture
 
-![LSTM Encoder-Decoder Architecture](images/da1_model.png)
+![LSTM Encoder-Decoder Architecture](reports/figures/da1_model.png)
 
 ## Model Comparison: LSTM Encoder-Decoder vs Traditional LSTM
 
