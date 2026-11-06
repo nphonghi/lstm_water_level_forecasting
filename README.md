@@ -4,21 +4,15 @@ The project focuses on researching the LSTM Encoder-Decoder deep learning model,
 
 Climate change has significantly increased the frequency and intensity of extreme weather events such as heavy rainfall and storms, posing serious flood risks for Vietnam. Accurate water level forecasting is therefore vital for disaster preparedness and risk management. Traditional time series forecasting models like ARIMA often assume linearity, which limits their effectiveness in capturing complex hydrological dynamics. In contrast, deep learning models, particularly LSTM networks, are capable of learning non-linear relationships and temporal dependencies from data. This project investigates the use of an LSTM Encoder-Decoder architecture, inspired by sequence-to-sequence models in natural language processing, to forecast multi-step water levels at Le Thuy station using historical data on water levels, rainfall, and tides.
 
-## 🔄 Project Workflow
-
-The overall workflow of this project follows a 7-step machine learning lifecycle, as illustrated below:
+## Project Workflow
 
 ![Project Workflow](images/workflow.png)
 
-## 🧠 Model Architecture
-
-The figure below illustrates the full architecture of the LSTM Encoder-Decoder model used in this project. It includes the data preprocessing flow, how input mini-batches are constructed, and how they are passed through the Encoder and Decoder blocks.
-
-> 📌 **Tip**: You can zoom in on the image to see all mathematical notations and tensor dimensions in detail.
+## Model Architecture
 
 ![LSTM Encoder-Decoder Architecture](images/da1_model.png)
 
-## 🔍 Model Comparison: LSTM Encoder-Decoder vs Traditional LSTM
+## Model Comparison: LSTM Encoder-Decoder vs Traditional LSTM
 
 | Metric | Traditional LSTM | LSTM Encoder-Decoder |
 |--------|------------------|----------------------|
@@ -27,24 +21,4 @@ The figure below illustrates the full architecture of the LSTM Encoder-Decoder m
 | RMSE   | 0.5508           | **0.2383**           |
 | R²     | 0.7072           | **0.9447**           |
 
-## 📊 Result Analysis: LSTM Encoder-Decoder vs Traditional LSTM
-
-The results clearly demonstrate the superior performance of the **LSTM Encoder-Decoder** model over the traditional **LSTM** model across all evaluation metrics:
-
-### 🔺 Forecast Errors
-
-- **Mean Squared Error (MSE)**: Decreased significantly from `0.3034` to `0.0568` (**-81.28%**).
-- **Mean Absolute Error (MAE)**: Reduced from `0.2985` to `0.1048` (**-64.89%**).
-- **Root Mean Squared Error (RMSE)**: Dropped from `0.5508` to `0.2383` (**-56.73%**).
-
-➡️ These improvements indicate that the average prediction error of the proposed Encoder-Decoder model is **approximately half** that of the traditional LSTM.
-
-### 📈 Model Fit (R² Score)
-
-- **Traditional LSTM**: R² = `0.7072` → explains 70.72% of the variance in the actual data.
-- **LSTM Encoder-Decoder**: R² = `0.9447` → explains 94.47% of the variance (**+33.58%** improvement).
-
-➡️ This substantial increase in R² shows that the Encoder-Decoder model not only fits the data better but also excels in capturing future trends.
-
-> ✅ **Conclusion**: The LSTM Encoder-Decoder architecture is significantly more accurate and reliable for multi-step water level forecasting, making it a powerful alternative to traditional LSTM-based models.
 
